@@ -26,10 +26,14 @@ class WordpresserMiddleware(object):
         self.app = app
 
     def __call__(self, environ, start_response):
+        from inspect import getframeinfo, stack
+        caller = getframeinfo(stack()[1][0])
+        print('{}: {}'.format(caller.lineno, caller.filename))
         '''WSGI Middleware that renders the page as usual, then
         transcludes some of the content from a Wordpress proxy.
         '''
         # get our content
+        print('###Called')
         status, headers, app_iter, exc_info = call_wsgi_application(
             self.app, environ, catch_exc_info=True)
         skip_codes = ['301', '302', '304', '401']
@@ -78,8 +82,9 @@ class WordpresserMiddleware(object):
                         content = ""
                         headers = [('Location', exc.location)]
         start_response(status, headers, exc_info)
-        return encode_unicode_app_iter(app_iter,
-                                       encoding="utf-8")
+
+        return encode_unicode_app_iter(app_iter, encoding="utf-8")
+
 
     @classmethod
     def replace_relevant_bits(cls,
@@ -140,7 +145,7 @@ class WordpresserMiddleware(object):
                     proxy_content = wp_etree.xpath(
                         '//div[@class="content"]')[0]
                     proxy_title = wp_etree.xpath('//title')[0]
-                except IndexError:
+                except IndexError as e:
                     # we got something unexpected from Wordpress
                     pass
 
@@ -155,11 +160,14 @@ class WordpresserMiddleware(object):
         # finally, replace all references to the WP hostname with our
         # own hostname
         content = tostring(content_etree, encoding=unicode)
+
         return content.replace(proxy_host, "/")
 
     @classmethod
     @beaker_cache(key='path', expire=84600)
     def get_wordpress_content(cls, environ, path):
+        if environ is None:
+            environ = {'PATH_INFO': path, 'REQUEST_METHOD': 'GET'}
 
         from plugin import WordpresserException
 
@@ -196,4 +204,5 @@ class WordpresserMiddleware(object):
         # XXX in fact we currently never get content_encoding passed
         # on by the proxy, which is presumably a bug:
         body = wp_resp.body.decode('utf-8')
+
         return (wp_resp.status, body)

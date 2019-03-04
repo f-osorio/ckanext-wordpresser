@@ -3,8 +3,10 @@ import os
 
 log = logging.getLogger(__name__)
 
+from pylons import config
+import ckan.plugins.toolkit as tk
 from ckan.plugins import implements, SingletonPlugin
-from ckan.plugins import IConfigurable, IMiddleware, IConfigurer
+from ckan.plugins import IConfigurable, IMiddleware, IConfigurer, ITemplateHelpers
 
 from ckanext.wordpresser.middleware import WordpresserMiddleware
 
@@ -16,6 +18,7 @@ class Wordpresser(SingletonPlugin):
     implements(IConfigurable, inherit=True)
     implements(IConfigurer, inherit=True)
     implements(IMiddleware, inherit=True)
+    implements(ITemplateHelpers)
 
     def configure(self, config):
         self.config = config
@@ -25,12 +28,14 @@ class Wordpresser(SingletonPlugin):
             raise WordpresserException(msg)
 
     def update_config(self, config):
-        here = os.path.dirname(__file__)
-        rootdir = os.path.dirname(os.path.dirname(here))
-        template_dir = os.path.join(rootdir, 'ckanext', 'wordpresser', 'theme', 'templates')
-        config['extra_template_paths'] = ','.join([template_dir,
-                config.get('extra_template_paths', '')])
+        tk.add_template_directory(config, 'templates')
 
 
     def make_middleware(self, app, config):
         return WordpresserMiddleware(app)
+
+    def get_helpers(self):
+        return {
+                'get_content': WordpresserMiddleware.get_wordpress_content,
+                'get_relevant': WordpresserMiddleware.replace_relevant_bits,
+        }

@@ -21,7 +21,7 @@ setup(
 	url='',
 	license='GPL',
 	packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
-	namespace_packages=['ckanext', 'ckanext.wordpresser'],
+    #namespace_packages=['ckanext', 'ckanext.wordpresser'],
 	include_package_data=True,
 	zip_safe=False,
 	install_requires=[
