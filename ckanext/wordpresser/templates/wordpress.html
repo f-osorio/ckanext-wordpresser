@@ -14,8 +14,10 @@
 
 <div id="main">
     <div class="prepend-1 span-16 last">
-        <div id="content">
-            {{ h.get_content(None, 'archives/17')[1]|safe }}
+        <div id="body_content">
+            CONTENT
+            {#{ h.get_content(None, 'archives/17')[1]|safe }#}
+            {#{ h.get_content(None, 'partners')[1]|safe }#}
         </div>
     </div>
   <div class="clearfix"></div>

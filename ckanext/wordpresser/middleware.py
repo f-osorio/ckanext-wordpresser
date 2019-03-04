@@ -28,12 +28,11 @@ class WordpresserMiddleware(object):
     def __call__(self, environ, start_response):
         from inspect import getframeinfo, stack
         caller = getframeinfo(stack()[1][0])
-        print('{}: {}'.format(caller.lineno, caller.filename))
+        #print('{}: {}'.format(caller.lineno, caller.filename))
         '''WSGI Middleware that renders the page as usual, then
         transcludes some of the content from a Wordpress proxy.
         '''
         # get our content
-        print('###Called')
         status, headers, app_iter, exc_info = call_wsgi_application(
             self.app, environ, catch_exc_info=True)
         skip_codes = ['301', '302', '304', '401']
@@ -58,6 +57,7 @@ class WordpresserMiddleware(object):
                 if content and not content.startswith("<?xml"):
                     # get wordpress page content
                     try:
+                        print('>>>>')
                         wp_status, wp_content = self.get_wordpress_content(
                             environ,
                             environ['PATH_INFO'])
@@ -126,7 +126,10 @@ class WordpresserMiddleware(object):
                 # no nav in the page from wordpress
                 pass
         # insert WP content into CKAN content area, if required
+        print('**********************')
+        print(original_status_int)
         if original_status_int >= 400:
+            print('replacing body_content')
             proxy_title = None
             proxy_content = None
             if wp_status_int >= 400:
@@ -142,15 +145,16 @@ class WordpresserMiddleware(object):
                     proxy_content.attrib['id'] = "content"
             else:
                 try:
-                    proxy_content = wp_etree.xpath(
-                        '//div[@class="content"]')[0]
+                    proxy_content = wp_etree.xpath('//div[@id="content"]')[0]
                     proxy_title = wp_etree.xpath('//title')[0]
                 except IndexError as e:
+                    print('??error?? {}'.format(e))
+                    #print(wp_content)
                     # we got something unexpected from Wordpress
                     pass
 
             if proxy_content is not None:
-                orig_content = content_etree.xpath('//div[@id="content"]')[0]
+                orig_content = content_etree.xpath('//div[@id="body_content"]')[0]
                 orig_content.getparent().replace(orig_content,
                                                  proxy_content)
                 orig_title = content_etree.xpath('//title')[0]
@@ -166,6 +170,7 @@ class WordpresserMiddleware(object):
     @classmethod
     @beaker_cache(key='path', expire=84600)
     def get_wordpress_content(cls, environ, path):
+        print('##')
         if environ is None:
             environ = {'PATH_INFO': path, 'REQUEST_METHOD': 'GET'}
 
@@ -182,6 +187,7 @@ class WordpresserMiddleware(object):
         proxy_url = proxy_host
 
         while follow:
+            print('following: {}'.format(proxy_url))
             # deal with redirects internal to Wordpress
             try:
                 wp_resp = req.get_response(paste.proxy.Proxy(proxy_url))
@@ -189,8 +195,11 @@ class WordpresserMiddleware(object):
                 msg = "Address-related error: %s (%s)" % (str(e),proxy_host)
                 raise WordpresserException(msg)
 
+            print(wp_resp.status_int)
+            print(wp_resp.location)
             follow = wp_resp.status_int == 301 \
                      and proxy_host in wp_resp.location
+            print('follow: {}'.format(follow))
             environ['PATH_INFO'] = '/'
             proxy_url = wp_resp.location
             req = Request(environ)
@@ -204,5 +213,7 @@ class WordpresserMiddleware(object):
         # XXX in fact we currently never get content_encoding passed
         # on by the proxy, which is presumably a bug:
         body = wp_resp.body.decode('utf-8')
+        print('+++++++++++++++++')
+        #print(body)
 
         return (wp_resp.status, body)
