@@ -6,6 +6,12 @@
     </li>
 {% endblock %}
 
+{% block content_primary_nav %}
+    Navigation here or something else?
+{% endblock %}
+
+{% block content_action %}{% endblock %}
+
 
 {% block secondary_content %}
     <div style="text-align:center;">
@@ -22,7 +28,7 @@
 {% endblock %}
 
 {% block primary_content_inner %}
-
+{% resource 'wordpress/wordpress.css' %}
 <div id="main">
     <div class="prepend-1 span-16 last">
         <div id="body_content">

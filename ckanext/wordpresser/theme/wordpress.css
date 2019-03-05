@@ -1,0 +1,17 @@
+.alignleft {
+    float: left;
+    margin-right: 10px;
+}
+
+.post p {
+    margin: 14px 0 14px 0;
+}
+
+.post em {
+    font-style: italic;
+}
+
+.post ul {
+    list-style: circle;
+    margin: 0 0 0 25px;
+}

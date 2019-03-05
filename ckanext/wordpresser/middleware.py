@@ -157,17 +157,16 @@ class WordpresserMiddleware(object):
                 links = content_etree.xpath('//a')
                 for link in links:
                     try:
-                        if 'https://www.edawax.de' in link.get('href'):
+                        if 'https://www.edawax.de' in link.get('href') and '.jpg' not in link.get('href'):
                             link.attrib['href'] = link.get('href').replace('https://www.edawax.de', '')
                     except TypeError as e:
                         pass
-
 
         # finally, replace all references to the WP hostname with our
         # own hostname
         content = tostring(content_etree, encoding=unicode)
 
-        return content.replace(proxy_host, "/")
+        return content  #.replace(proxy_host, "/")
 
     @classmethod
     @beaker_cache(key='path', expire=84600)
