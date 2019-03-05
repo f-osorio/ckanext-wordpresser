@@ -6,7 +6,7 @@ log = logging.getLogger(__name__)
 from pylons import config
 import ckan.plugins.toolkit as tk
 from ckan.plugins import implements, SingletonPlugin
-from ckan.plugins import IConfigurable, IMiddleware, IConfigurer, ITemplateHelpers
+from ckan.plugins import IConfigurable, IMiddleware, IConfigurer, ITemplateHelpers, IRoutes
 
 from ckanext.wordpresser.middleware import WordpresserMiddleware
 
@@ -18,6 +18,7 @@ class Wordpresser(SingletonPlugin):
     implements(IConfigurable, inherit=True)
     implements(IConfigurer, inherit=True)
     implements(IMiddleware, inherit=True)
+    implements(IRoutes, inherit=True)
     implements(ITemplateHelpers)
 
     def configure(self, config):
@@ -39,3 +40,8 @@ class Wordpresser(SingletonPlugin):
                 'get_content': WordpresserMiddleware.get_wordpress_content,
                 'get_relevant': WordpresserMiddleware.replace_relevant_bits,
         }
+
+    def before_map(self, map):
+        map.connect('blog', '/2018')
+
+        return map
