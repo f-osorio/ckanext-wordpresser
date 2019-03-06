@@ -6,8 +6,21 @@
     </li>
 {% endblock %}
 
-{% block content_primary_nav %}
-    Navigation here or something else?
+{% block page_header %}
+    {% block content_primary_nav %}
+        <div id="blog_nav">
+        <center>
+            <h3>Blog Navigation</h3>
+            <ul>
+                <li><a href="/partners">Partners</a></li>
+                <li><a href="/events">Events</a></li>
+                <li><a href="/downloads">Downloads</a></li>
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </center>
+        </div>
+    {% endblock %}
+    <hr>
 {% endblock %}
 
 {% block content_action %}{% endblock %}
