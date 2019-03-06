@@ -34,7 +34,8 @@ class Wordpresser(SingletonPlugin):
     def update_config(self, config):
         tk.add_template_directory(config, 'templates')
         tk.add_resource('theme', 'wordpress')
-        #tk.add_resource('fanstatic', 'wordpress')  # resource need to be referenced in the template block too
+        tk.add_public_directory(config, 'public')
+        # resource need to be referenced in the template block too
 
 
     def make_middleware(self, app, config):

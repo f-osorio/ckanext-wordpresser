@@ -25,6 +25,7 @@ class WordpresserMiddleware(object):
     def __init__(self, app):
         self.app = app
 
+
     def __call__(self, environ, start_response):
         '''WSGI Middleware that renders the page as usual, then
         transcludes some of the content from a Wordpress proxy.
