@@ -1,0 +1,85 @@
+{% extends "organization/read_base.html" %}
+
+{% block breadcrumb_content %}
+    <li>
+        <strong>
+            <a href="/blog">
+                Blog
+            </a>
+        </strong>
+    </li>
+{% endblock %}
+
+{% block page_header %}
+    {% block content_primary_nav %}
+        <div id="blog_nav">
+        <center>
+            <h3>Blog Navigation</h3>
+            <ul>
+                <li>
+                    <a href="/about_edawax">About</a>
+                </li>
+                <li>
+                    <a href="/partners">Partners</a>
+                </li>
+                <li>
+                    <a href="/events">Events</a>
+                </li>
+                <li>
+                    <a href="/downloads">Downloads</a>
+                </li>
+                <li>
+                    <a href="/imprint">Imprint</a>
+                </li>
+            </ul>
+        </center>
+        </div>
+    {% endblock %}
+    <hr>
+{% endblock %}
+
+{% block content_action %}{% endblock %}
+
+
+{% block secondary_content %}
+    <img src="/blogger.png" width="200" alt="blog">
+    <div style="text-align:center;">
+        <h3>View Posts By Year</h3>
+        <a class="blog_nav" href="/2018">2018</a><br>
+        <a class="blog_nav" href="/2017">2017</a><br>
+        <a class="blog_nav" href="/2016">2016</a><br>
+        <a class="blog_nav" href="/2015">2015</a><br>
+        <a class="blog_nav" href="/2014">2014</a><br>
+        <a class="blog_nav" href="/2013">2013</a><br>
+        <a class="blog_nav" href="/2012">2012</a><br>
+        <a class="blog_nav" href="/2011">2011</a><br>
+    </div>
+{% endblock %}
+
+
+{% block primary_content_inner %}
+{% resource 'wordpress/wordpress.css' %}
+<p>
+    <h1><img class="alignleft wp-image-2918" src="/software-657188_640.jpg" width="350" height="263" />[About]</h1>The project &#8220;<strong>
+        <em>European Data Watch Extended</em>
+    </strong>&#8221; (EDaWaX) was a project funded by the German Research Foundation (<a href="http://www.dfg.de/en/" target="_blank">DFG</a>) between 2011 and 2016.</p>
+<p>One of the main purposes of the project was to develop a software to facilitate the management of replication files for editorial offices in economics and management.</p>
+    <p>After completing the project, this software component has become the <a href="http://www.journaldata.zbw.eu">ZBW Journal Data Archive</a>. The ZBW &#8211; Leibniz Information Centre for Economics / German National Library of Economics now offers this service for editorial offices free of charge.</p>
+    <p>Beside developing the software for the <em>Journal Data Archive</em>, the project conducted a lot of surveys and published the results. The project’s analyses included <a href="http://dx.doi.org/10.3233/978-1-61499-562-3-145">examinations of journal data policies</a>, <a href="http://dx.doi.org/10.1016/j.respol.2014.04.008">data sharing behaviour of economists</a> and surveys on perceptions of editorial offices towards data availability policies. In addition, EDaWaX checked if <a href="http://hdl.handle.net/10419/88148">services for journals</a> to manage replication data were available among scientific infrastructure service providers in Germany and abroad.</p>
+    <p>EDaWaX was a joint project of <em>ZBW-Leibniz Information Centre for Economics</em>, the <em>German Data Forum</em> (RatSWD), the <em>Max Planck Institute for Innovation and Competition</em> (MCIER) and the <em>Research Data Centre of the Socio-Economic Panel</em> (FDZ SOEP) at DIW Berlin.</p>
+    <p style="text-align: left;">
+        <strong>More information:</strong>
+    </p>
+    <ul>
+        <li style="text-align: left;">
+            <em>Click &gt;<a title="About EDaWaX " href="http://www.edawax.de/partners">here</a>&lt; for more information on EDaWaX&#8217;s <strong>project consortium</strong>.</em>
+        </li>
+        <li style="text-align: left;">
+            <em>Click &gt;<a title="About EDaWaX " href="http://www.edawax.de/about-the-2nd-funding-phase/">here</a>&lt; for more information on EDaWaX&#8217;s <strong>second funding</strong> <strong>phase</strong>.</em>
+        </li>
+        <li style="text-align: left;">
+            <em>Click &gt;<a title="About EDaWaX " href="http://www.edawax.de/about-the-1st-project-phase/">here</a>&lt; for more information on EDaWaX&#8217;s <strong>first funding</strong> <strong>phase</strong>.</em>
+        </li>
+    </ul>
+
+{% endblock %}
