@@ -35,6 +35,17 @@
     margin-right: 10px;
 }
 
+.alignright {
+    float: right;
+    width: 100%;
+}
+
+.wp-image-2062,
+.wp-image-2059,
+.wp-image-1196 {
+    width: 100%;
+}
+
 .post p {
     margin: 14px 0 14px 0;
 }
