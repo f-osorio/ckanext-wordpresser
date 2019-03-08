@@ -20,7 +20,6 @@ class Wordpresser(SingletonPlugin):
     implements(IConfigurer, inherit=True)
     implements(IMiddleware, inherit=True)
     implements(IRoutes, inherit=True)
-    implements(ITemplateHelpers)
 
 
     def configure(self, config):
@@ -40,13 +39,6 @@ class Wordpresser(SingletonPlugin):
 
     def make_middleware(self, app, config):
         return WordpresserMiddleware(app)
-
-
-    def get_helpers(self):
-        return {
-                'get_content': WordpresserMiddleware.get_wordpress_content,
-                'get_relevant': WordpresserMiddleware.replace_relevant_bits,
-               }
 
 
     def before_map(self, map):
