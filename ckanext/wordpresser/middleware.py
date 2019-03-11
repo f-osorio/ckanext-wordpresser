@@ -1,3 +1,4 @@
+import os
 import logging
 
 log = logging.getLogger(__name__)
@@ -16,6 +17,16 @@ from socket import gaierror
 from pylons.controllers.util import redirect
 
 from ckan.lib.base import render
+
+
+def check_extension(link):
+    try:
+        parts = os.path.splitext(link)
+        if parts[-1] in ['.png', '.pdf', '.jpg']:
+            return False
+        return True
+    except:
+        return False
 
 
 class WordpresserMiddleware(object):
@@ -149,7 +160,7 @@ class WordpresserMiddleware(object):
                 links = content_etree.xpath('//a')
                 for link in links:
                     try:
-                        if 'https://www.edawax.de' in link.get('href') and '.jpg' not in link.get('href') and '.pdf' not in link.get('href'):
+                        if 'https://www.edawax.de' in link.get('href') and check_extension(link.get('href')):
                             link.attrib['href'] = link.get('href').replace('https://www.edawax.de', '')
                     except TypeError as e:
                         #print('Error: {}'.format(e))
@@ -157,7 +168,7 @@ class WordpresserMiddleware(object):
 
                     # some links are http and open new windows, prevent that
                     try:
-                        if 'http://www.edawax.de' in link.get('href') and '.jpg' not in link.get('href') and '.pdf' not in link.get('href'):
+                        if 'http://www.edawax.de' in link.get('href') and check_extension(link.get('href')):
                             link.attrib['href'] = link.get('href').replace('http://www.edawax.de', '')
                         try:
                             if link.attrib['target'] == '_blank':
