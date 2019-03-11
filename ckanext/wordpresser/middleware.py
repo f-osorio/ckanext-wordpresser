@@ -149,7 +149,7 @@ class WordpresserMiddleware(object):
                 links = content_etree.xpath('//a')
                 for link in links:
                     try:
-                        if 'https://www.edawax.de' in link.get('href') and '.jpg' not in link.get('href'):
+                        if 'https://www.edawax.de' in link.get('href') and '.jpg' not in link.get('href') and '.pdf' not in link.get('href'):
                             link.attrib['href'] = link.get('href').replace('https://www.edawax.de', '')
                     except TypeError as e:
                         #print('Error: {}'.format(e))
@@ -157,7 +157,7 @@ class WordpresserMiddleware(object):
 
                     # some links are http and open new windows, prevent that
                     try:
-                        if 'http://www.edawax.de' in link.get('href') and '.jpg' not in link.get('href'):
+                        if 'http://www.edawax.de' in link.get('href') and '.jpg' not in link.get('href') and '.pdf' not in link.get('href'):
                             link.attrib['href'] = link.get('href').replace('http://www.edawax.de', '')
                         try:
                             if link.attrib['target'] == '_blank':
