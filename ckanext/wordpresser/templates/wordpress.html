@@ -57,3 +57,14 @@
   <div class="clearfix"></div>
 </div>
 {% endblock %}
+
+{% block scripts %}
+    {# Remove the message about tags. #}
+    {# This message isn't useful for the blog but due to how #}
+    {# the import is handled. The fact that both the JDA and blog #}
+    {# use the same path `/tag` means it will always show up. #}
+    <script>
+        var msg = document.getElementsByClassName('flash-messages')[0];
+        msg.parentNode.removeChild(msg);
+    </script>
+{% endblock %}
