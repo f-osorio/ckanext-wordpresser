@@ -1,4 +1,5 @@
 {% extends "organization/read_base.html" %}
+{% resource 'vendor/font-awesome.css' %}
 
 {% block breadcrumb_content %}
     <li>
@@ -15,6 +16,7 @@
         <div id="blog_nav">
         <center>
             <h3>Blog Navigation</h3>
+            <i class="home-icon"></i>
             <ul>
                 <li><a href="/about_edawax">About</a></li>
                 <li><a href="/partners">Partners</a></li>
@@ -59,10 +61,12 @@
 {% endblock %}
 
 {% block scripts %}
+    {{ super() }}
     {# Remove the message about tags. #}
     {# This message isn't useful for the blog but due to how #}
     {# the import is handled. The fact that both the JDA and blog #}
     {# use the same path `/tag` means it will always show up. #}
+    {# This appears to be preventing the icons from appearing? #}
     <script>
         var msg = document.getElementsByClassName('flash-messages')[0];
         msg.parentNode.removeChild(msg);
