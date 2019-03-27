@@ -44,8 +44,9 @@ class WordpresserMiddleware(object):
         # get our content
         status, headers, app_iter, exc_info = call_wsgi_application(
             self.app, environ, catch_exc_info=True)
-        skip_codes = ['301', '302', '304', '401']
+        skip_codes = ['301', '302', '304', '401', '200']  # add 200 to prevent dashboard being inaccessible. Not sure why this fixes it
         skip = [x for x in skip_codes if status.startswith(x)]
+
         if environ['REQUEST_METHOD'] in ['GET', 'POST'] \
                and not skip:
             # XXX return text/html too

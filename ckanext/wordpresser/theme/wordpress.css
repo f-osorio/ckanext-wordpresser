@@ -21,6 +21,7 @@ a:hover {
     color: #ff3333;
     text-decoration: none;
     padding: 3px 0 3px 0;
+    font-weight: 600;
 }
 
 .side_nav {
