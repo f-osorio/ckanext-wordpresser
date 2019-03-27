@@ -1,5 +1,4 @@
 {% extends "organization/read_base.html" %}
-{% resource 'vendor/font-awesome.css' %}
 
 {% block breadcrumb_content %}
     <li>
@@ -15,7 +14,7 @@
     {% block content_primary_nav %}
         <div id="blog_nav">
         <center>
-            <h3>Blog Navigation</h3>
+            <h3>EDaWaX Navigation</h3>
             <i class="home-icon"></i>
             <ul>
                 <li><a href="/about_edawax">About</a></li>
@@ -27,15 +26,16 @@
         </center>
         </div>
     {% endblock %}
-    <hr>
+    <hr style="margin-top: 0; margin-bottom: 0;">
 {% endblock %}
 
 {% block content_action %}{% endblock %}
 
 
 {% block secondary_content %}
-    <img class="blog_img" src="/blogger.png" width="200" alt="blog">
-    <div style="text-align:center;">
+    <img class="blog_img" src="/edawax_logo.png" width="200" alt="blog">
+    <hr class="side_nav">
+    <div style="text-align:center;" class="edawax_blog">
         <h3>View Posts By Year</h3>
         <a class="blog_nav" href="/2018">2018</a><br>
         <a class="blog_nav" href="/2017">2017</a><br>
@@ -53,7 +53,7 @@
 {% resource 'wordpress/wordpress.css' %}
 <div id="main">
     <div class="prepend-1 span-16 last">
-        <div id="body_content">
+        <div id="body_content" class="edawax_blog">
             CONTENT
         </div>
     </div>
