@@ -1,0 +1,51 @@
+{% ckan_extends %}
+{% block header_wrapper %}
+{% resource 'edawax/edawax.css' %}
+{% resource 'edawax/changes.css' %}
+{% resource 'edawax/font.css' %}
+
+    {% block header_account %}
+        {% resource 'edawax/browser_check.js' %}
+        <span data-module="browser_check"
+              id="browser_popover"></span>
+
+        {{ super() }}
+
+    {% endblock %}
+
+    <hgroup class="{{ g.header_class }}">
+    {% block header_logo %}
+        <a class="logo" href="/"><img src="/jda-logo.png" alt="ZBW Journal Data Archive" title="ZBW Journal Data Archive" /></a>
+    {% endblock %}
+    </hgroup>
+
+    {% block header_debug %}
+
+        {# {{ super() }} #}
+    {% endblock %}
+
+    {% if request.path != "/" %}
+    <div class="searchcontainer">  {#this closes on a different page#}
+        <!--</div> -->
+        {% block header_site_navigation %}
+                <nav class="section navigation">
+                    <ul class="nav nav-pills">
+                        {% block header_site_navigation_tabs %}
+                        {{ h.build_nav_main(
+                        ('search', _('Datasets')),
+                        ('organizations_index', _('Journals')),
+                        ('info', _('Info')),
+                        ) }}
+                        {% endblock %}
+                    </ul>
+                </nav>
+
+        {% endblock %}
+
+    {% endif %}
+
+
+
+
+
+{% endblock %}
